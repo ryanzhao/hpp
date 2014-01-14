@@ -4,7 +4,10 @@
 // Ryan (Weiran) Zhao 
 //============================================================
 // Started: Mon,Jan 13th 2014 08:42:06 PM EST
-// Last Modified: Mon,Jan 13th 2014 09:18:23 PM EST
+// Modified: Mon,Jan 13th 2014 10:23:27 PM EST
+//          "exit" function is a sandbox function, can not use for online
+//          testing, but it is perfectly fine for local computer
+// Last Modified: Mon,Jan 13th 2014 10:24:45 PM EST
 //----------------------------------------------------------------------------
 #include<wb.h>
 
@@ -52,17 +55,17 @@ int main(int argc, char ** argv) {
     if( (err=cudaMalloc((void**) &deviceInput1, sizeof(float)*inputLength)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
     if( (err=cudaMalloc((void**) &deviceInput2, sizeof(float)*inputLength)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
     if( (err=cudaMalloc((void**) &deviceOutput, sizeof(float)*inputLength)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
 
     wbTime_stop(GPU, "Allocating GPU memory.");
@@ -76,13 +79,13 @@ int main(int argc, char ** argv) {
                     cudaMemcpyHostToDevice)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
     if( (err=cudaMemcpy(deviceInput2, hostInput2,sizeof(float)*inputLength,
                     cudaMemcpyHostToDevice)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
 
     wbTime_stop(GPU, "Copying input memory to the GPU.");
@@ -111,7 +114,7 @@ int main(int argc, char ** argv) {
                     cudaMemcpyDeviceToHost)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
 
     wbTime_stop(Copy, "Copying output memory to the CPU");
@@ -124,17 +127,17 @@ int main(int argc, char ** argv) {
     if( (err=cudaFree(deviceInput1)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
     if( (err=cudaFree(deviceInput2)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
     if( (err=cudaFree(deviceOutput)) != cudaSuccess) {
         printf("%s in %s at line %d\n", cudaGetErrorString(err),
                 __FILE__, __LINE__);
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
 
     wbTime_stop(GPU, "Freeing GPU Memory");
