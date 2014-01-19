@@ -4,7 +4,7 @@
 //============================================================
 // Ryan (Weiran) Zhao 
 // Started: Tue,Jan 14th 2014 09:21:51 PM EST
-// Last Modified: Tue,Jan 14th 2014 10:14:12 PM EST
+// Last Modified: Sat,Jan 18th 2014 09:50:51 PM EST
 //----------------------------------------------------------------------------
 #include<wb.h>
 
@@ -67,7 +67,7 @@ int main(int argc, char ** argv) {
     //------------------------------
     // currently use 16-by-16 blocks
     //------------------------------
-    int blkXDim = 16; 
+    int blkXDim = 32; 
     int blkYDim = 16;
 
     args = wbArg_read(argc, argv);

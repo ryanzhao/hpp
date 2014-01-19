@@ -14,3 +14,4 @@
 
 # ignore build
 build
+.[a-zA-Z0-9]*
