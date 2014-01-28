@@ -5,7 +5,7 @@
 //============================================================
 // Ryan (Weiran) Zhao 
 // Started: noon of Tue,Jan 28th 2014 
-// Last Modified: Tue,Jan 28th 2014 03:35:30 PM EST
+// Last Modified: Tue,Jan 28th 2014 04:07:43 PM EST
 //----------------------------------------------------------------------------
 
 #include    <wb.h>
@@ -145,9 +145,6 @@ int main(int argc, char ** argv) {
     // copy memory from gpu to host
     //-----------------------------
     wbCheck(cudaMemcpy(hostOutput, deviceOutput, sizeof(float)*numOutputElements, cudaMemcpyDeviceToHost));
-    for(int i=0;i<numOutputElements;i++) {
-        printf("data %f\n",hostOutput[i]);
-    }
 
     wbTime_stop(Copy, "Copying output memory to the CPU");
 
