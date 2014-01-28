@@ -26,25 +26,50 @@ __global__ void total(float * input, float * output, int len) {
     //-----------------------
     __shared__ float shdVect[BLOCK_SIZE*2];
     //@@ Load a segment of the input vector into shared memory
-    if((start+tid) < len) {
-        shdVect[tid]=input[start+tid];
-        if((start+blockDim.x+tid) < len) {
-            shdVect[blockDim.x+tid] = input[start+blockDim.x+tid];
-        } 
-    } 
+    //if((start+tid) < len) {
+    //    shdVect[tid]=input[start+tid];
+    //    if((start+blockDim.x+tid) < len) {
+    //        shdVect[blockDim.x+tid] = input[start+blockDim.x+tid];
+    //    } 
+    //} 
+    ////@@ Traverse the reduction tree
+    //int stride = blockDim.x;
+    //while(stride > 0) {
+    //    __syncthreads();
+    //    //---------------------------------------
+    //    // participating threads halved each time
+    //    //---------------------------------------
+    //    if((tid<stride) && ((start+tid+stride) < len)) {
+    //        shdVect[tid] += shdVect[tid+stride];
+    //    }
+    //    stride/=2;
+    //}
 
-    //@@ Traverse the reduction tree
+    //------------------------------------------
+    // another way to load data and do reduction
+    //------------------------------------------
+    if((start+tid)<len) {
+        shdVect[tid]=input[start+tid];
+    } else {
+        shdVect[tid]=0.0;
+    }
+    if((start+blockDim.x+tid)<len) {
+        shdVect[tid+blockDim.x]=input[start+tid+blockDim.x];
+    } else {
+        shdVect[tid+blockDim.x]=0.0;
+    }
     int stride = blockDim.x;
     while(stride > 0) {
         __syncthreads();
         //---------------------------------------
         // participating threads halved each time
         //---------------------------------------
-        if((tid<stride) && ((start+tid+stride) < len)) {
+        if(tid<stride) {
             shdVect[tid] += shdVect[tid+stride];
         }
         stride/=2;
     }
+
     //@@ Write the computed sum of the block to the output vector at the correct index
     if(tid==0) {
         output[blockIdx.x] = shdVect[tid];
